@@ -1,7 +1,7 @@
-name: Deploy S3 Bucket using Terraform (CDKTF TypeScript)
+name: Deploy S3 Bucket using CDK for Terraform (TypeScript)
 
 on:
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -24,6 +24,11 @@ jobs:
           npm install -g cdktf-cli
           npm install
 
+      - name: Install Terraform CLI
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5  # (you can use the latest stable version)
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -31,8 +36,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Synthesize Terraform
+      - name: Synthesize Terraform configuration
         run: cdktf synth
 
-      - name: Deploy S3 bucket
+      - name: Deploy infrastructure
         run: cdktf deploy --auto-approve
