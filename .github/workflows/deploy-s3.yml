@@ -1,7 +1,7 @@
-name: Deploy S3 Bucket using CDK for Terraform (TypeScript)
+name: Deploy S3 Bucket using CDK for Terraforms (TypeScript)
 
 on:
-  workflow_dispatch:
+  
   push:
     branches:
       - main
